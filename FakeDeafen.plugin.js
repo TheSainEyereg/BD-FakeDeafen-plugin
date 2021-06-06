@@ -95,10 +95,12 @@ class FDPlugin {
     getName() {return 'FakeDeafen';}
     getShortName() {return 'FD';}
     getDescription() {return 'Plugin that allows you to fake your deafen.';}
-    getVersion() {return '1.0.0';}
+    getVersion() {return '1.0.1';}
     //getSettingsPanel() {return '}
 
     start() {
+        if (!global.ZeresPluginLibrary) return window.BdApi.alert("Library Missing",`The library plugin needed for ${this.getName()} is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);
+        ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), "https://raw.githubusercontent.com/TheSainEyereg/BD-fake-deafen-plugin/master/FakeDeafen.plugin.js");
         let jquery_id = document.getElementById('jquery');
         if (!jquery_id) {
             Api.linkJS('jquery', 'https://code.jquery.com/jquery-3.5.1.min.js');
