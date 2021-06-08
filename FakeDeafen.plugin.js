@@ -1,7 +1,7 @@
-//META{"name":"FDPlugin", "author": "Olejka", "authorId":"388353045500657674", "website":"https://olejka.ru/", "source":"https://github.com/TheSainEyereg/BD-fake-deafen-plugin", "updateUrl":"https://raw.githubusercontent.com/TheSainEyereg/BD-fake-deafen-plugin/master/FakeDeafen.plugin.js"}*//
+//META{"name":"FDPlugin", "author": "Olejka", "authorId":"388353045500657674", "website":"https://olejka.ru/", "source":"https://github.com/TheSainEyereg/BD-FakeDeafen-plugin"}*//
 
 const Api = BdApi;
-const raw = 'https://raw.githubusercontent.com/TheSainEyereg/BD-fake-deafen-plugin/master/FakeDeafen.plugin.js'
+const raw = 'https://raw.githubusercontent.com/TheSainEyereg/BD-FakeDeafen-plugin/master/FakeDeafen.plugin.js'
 
 function mute(arg, callback) {
     let buttons = $('.container-3baos1 .horizontal-1ae9ci button');
@@ -100,7 +100,7 @@ class FDPlugin {
                 main();
             })
         } else main();
-        
+
         setTimeout(ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), raw), 60000)
     }
        
