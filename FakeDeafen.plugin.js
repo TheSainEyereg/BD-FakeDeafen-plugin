@@ -1,6 +1,7 @@
 //META{"name":"FDPlugin", "author": "Olejka", "authorId":"388353045500657674", "website":"https://olejka.ru/", "source":"https://github.com/TheSainEyereg/BD-fake-deafen-plugin", "updateUrl":"https://raw.githubusercontent.com/TheSainEyereg/BD-fake-deafen-plugin/master/FakeDeafen.plugin.js"}*//
 
 const Api = BdApi;
+const raw = 'https://raw.githubusercontent.com/TheSainEyereg/BD-fake-deafen-plugin/master/FakeDeafen.plugin.js'
 
 function mute(arg, callback) {
     let buttons = $('.container-3baos1 .horizontal-1ae9ci button');
@@ -78,18 +79,20 @@ function main() {
             button.removeAttr('style');
         }
     })
+
+    setTimeout(ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), raw), 60000)
 };
 
 class FDPlugin {
     getName() {return 'FakeDeafen';}
     getShortName() {return 'FD';}
     getDescription() {return 'Plugin that allows you to fake your deafen.';}
-    getVersion() {return '1.0.2';}
+    getVersion() {return '1.0.3';}
     //getSettingsPanel() {return '}
 
     start() {
         if (!global.ZeresPluginLibrary) return window.BdApi.alert("Library Missing",`The library plugin needed for ${this.getName()} is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);
-        ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), "https://raw.githubusercontent.com/TheSainEyereg/BD-fake-deafen-plugin/master/FakeDeafen.plugin.js");
+        ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), raw);
         
         let jquery_id = document.getElementById('jquery');
         if (!jquery_id) {
