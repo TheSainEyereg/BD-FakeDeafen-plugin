@@ -79,8 +79,6 @@ function main() {
             button.removeAttr('style');
         }
     })
-
-    setTimeout(ZLibrary.PluginUpdater.checkForUpdate(FDPlugin.getName(), FDPlugin.getVersion(), raw), 60000)
 };
 
 class FDPlugin {
@@ -102,6 +100,8 @@ class FDPlugin {
                 main();
             })
         } else main();
+        
+        setTimeout(ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), raw), 60000)
     }
        
     stop() {
