@@ -24,7 +24,7 @@ function mute(arg, callback) {
     }
 };
 
-function FuckUpWS() {
+function replaceWS() {
     mute('true', _ => {
         const Decoder = new TextDecoder("utf-8");
         WebSocket.prototype.original = WebSocket.prototype.send;
@@ -71,7 +71,7 @@ function main() {
 
     button.on('click', _ => {
         if (!Api.getData('FakeDeafen', 'enabled')) {
-            FuckUpWS();
+            replaceWS();
             button.css('color', 'var(--status-positive-background)'); //--status-danger-background
         }
         else {
@@ -80,7 +80,7 @@ function main() {
         }
     })
 
-    setTimeout(ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), raw), 60000)
+    setTimeout(ZLibrary.PluginUpdater.checkForUpdate(FDPlugin.getName(), FDPlugin.getVersion(), raw), 60000)
 };
 
 class FDPlugin {
