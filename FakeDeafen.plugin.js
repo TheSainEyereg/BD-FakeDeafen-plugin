@@ -85,7 +85,7 @@ class FDPlugin {
     getName() {return 'FakeDeafen';}
     getShortName() {return 'FD';}
     getDescription() {return 'Plugin that allows you to fake your deafen.';}
-    getVersion() {return '1.0.3';}
+    getVersion() {return '1.0.5';}
     //getSettingsPanel() {return '}
 
     start() {
