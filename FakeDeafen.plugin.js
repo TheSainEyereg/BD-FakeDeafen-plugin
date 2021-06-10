@@ -85,11 +85,25 @@ class FDPlugin {
     getName() {return 'FakeDeafen';}
     getShortName() {return 'FD';}
     getDescription() {return 'Plugin that allows you to fake your deafen.';}
-    getVersion() {return '1.0.5';}
+    getVersion() {return '1.0.6';}
     //getSettingsPanel() {return '}
 
     start() {
-        if (!global.ZeresPluginLibrary) return window.BdApi.alert("Library Missing",`The library plugin needed for ${this.getName()} is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);
+        if (!global.ZeresPluginLibrary) return BdApi.showConfirmationModal('Missing library', 
+            [
+                `The library plugin needed for ${this.getName()} is missing.`
+            ],
+            {
+                confirmText: 'Download',
+                //cancelText: 'Cancel',
+                onConfirm: _ => {
+                    window.open('https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js');
+                },
+                onCancel: _ => {
+                    return console.error('Startup canceled!');
+                }
+            }
+        );
         ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), raw);
         
         let jquery_id = document.getElementById('jquery');
