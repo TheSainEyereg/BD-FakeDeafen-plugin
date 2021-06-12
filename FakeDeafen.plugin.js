@@ -6,11 +6,10 @@
  */
 /*@cc_on
 @if (@_jscript)
-	
 	// Offer to self-install for clueless users that try to run this directly.
 	var shell = WScript.CreateObject("WScript.Shell");
 	var fs = new ActiveXObject("Scripting.FileSystemObject");
-	var pathPlugins = shell.ExpandEnvironmentStrings("%APPDATA%\BetterDiscord\plugins");
+	var pathPlugins = shell.ExpandEnvironmentStrings("%APPDATA%/BetterDiscord/plugins");
 	var pathSelf = WScript.ScriptFullName;
 	// Put the user at ease by addressing them in the first person
 	shell.Popup("It looks like you've mistakenly tried to run me directly. \n(Don't do that!)", 0, "I'm a plugin for BetterDiscord", 0x30);
@@ -39,7 +38,7 @@ module.exports = (() => {
                     "twitter_username":"olejka_top4ik"
                 }
             ],
-            "version":"2.0.0",
+            "version":"2.0.1",
             "description":"Plugin that allows you to fake your mute and deafen.",
             "github":"https://github.com/TheSainEyereg/BD-FakeDeafen-plugin",
             "github_raw":"https://raw.githubusercontent.com/TheSainEyereg/BD-FakeDeafen-plugin/master/FakeDeafen.plugin.js"
