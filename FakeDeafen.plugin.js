@@ -38,17 +38,17 @@ module.exports = (() => {
                     "twitter_username":"olejka_top4ik"
                 }
             ],
-            "version":"2.1.0",
+            "version":"2.1.1",
             "description":"Plugin that allows you to fake your mute and deafen.",
             "github":"https://github.com/TheSainEyereg/BD-FakeDeafen-plugin",
             "github_raw":"https://raw.githubusercontent.com/TheSainEyereg/BD-FakeDeafen-plugin/master/FakeDeafen.plugin.js"
         },
         "changelog":[ //Fixes:"fixed", Improvements:"improved", Improvements:"type"
             {
-                "title":"Improvements",
-                "type":"improved",
+                "title":"Fixes",
+                "type":"fixed",
                 "items":[
-                    "Removed jQuery which caused poor performance"
+                    "Fixed click event."
                 ]
             },
             {
@@ -142,6 +142,10 @@ module.exports = (() => {
 
 
         onStart() {
+            Patcher.before(Logger, "log", (t, a) => {
+                a[0] = "Patched Message: " + a[0];
+            });
+            
             if (BdApi.getData('FakeDeafen', 'enabled')) {
                 this.restoreWS();
             }
@@ -159,7 +163,7 @@ module.exports = (() => {
             const panel = document.querySelector('.container-3baos1 .horizontal-1ae9ci');
             panel.prepend(button);
 
-            button.on('click', _ => {
+            button.onclick = _ => {
                 if (!BdApi.getData('FakeDeafen', 'enabled')) {
                     this.replaceWS();
                     button.style.color = 'var(--status-positive-background)' //--status-danger-background
@@ -168,12 +172,9 @@ module.exports = (() => {
                     this.restoreWS();
                     button.style.color = ''
                 }
-            })
+            }
 
             Logger.log("Started");
-            Patcher.before(Logger, "log", (t, a) => {
-                a[0] = "Patched Message: " + a[0];
-            });
         }
 
         onStop() {
