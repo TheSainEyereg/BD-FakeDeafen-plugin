@@ -38,24 +38,23 @@ module.exports = (() => {
                     "twitter_username":"olejka_top4ik"
                 }
             ],
-            "version":"2.0.1",
+            "version":"2.1.0",
             "description":"Plugin that allows you to fake your mute and deafen.",
             "github":"https://github.com/TheSainEyereg/BD-FakeDeafen-plugin",
             "github_raw":"https://raw.githubusercontent.com/TheSainEyereg/BD-FakeDeafen-plugin/master/FakeDeafen.plugin.js"
         },
-        "changelog":[
+        "changelog":[ //Fixes:"fixed", Improvements:"improved", Improvements:"type"
             {
-                "title":"Fixed",
-                "type":"fixed",
+                "title":"Improvements",
+                "type":"improved",
                 "items":[
-                    "Fixed double-click installation."
+                    "Removed jQuery which caused poor performance"
                 ]
             },
             {
                 "title":"On-going",
                 "type":"progress",
                 "items":[
-                    "Reject jQuery, use pure JS.",
                     "Use React component to mute/unmute user."
                 ]
             }
@@ -97,14 +96,14 @@ module.exports = (() => {
 
 
         aria_check(arg, callback) {
-            const buttons = $('.container-3baos1 .horizontal-1ae9ci button');
-            const button = buttons.eq(this.settings.action == "mute"?buttons.length-3:buttons.length-2); //some plugins adding another buttons
-            if (button.attr('aria-checked') == arg) {
+            const buttons = document.querySelectorAll('.container-3baos1 .horizontal-1ae9ci button');
+            const button = buttons[this.settings.action == "mute"?buttons.length-3:buttons.length-2]; //some plugins adding another buttons
+            if (button.getAttribute('aria-checked') == arg) {
                 if (callback) setTimeout(callback, 100);
             } else {
                 button.click();
                 function check() {
-                    if(button.attr('aria-checked')==arg) {
+                    if(button.getAttribute('aria-checked')==arg) {
                         if (callback) setTimeout(callback, 100);
                         return
                     } else {
@@ -142,11 +141,11 @@ module.exports = (() => {
         };
 
 
-        __main__() {
+        onStart() {
             if (BdApi.getData('FakeDeafen', 'enabled')) {
                 this.restoreWS();
             }
-            const button = $(`
+            const button = new DOMParser().parseFromString(`
                 <button 
                     aria-label="FakeDeafen"
                     role="switch" 
@@ -156,47 +155,37 @@ module.exports = (() => {
                 >
                     <div class="contents-18-Yxp">FD</div>
                 </button>
-            `);
-            const panel = $('.container-3baos1 .horizontal-1ae9ci');
+            `, 'text/html').body.childNodes[0];
+            const panel = document.querySelector('.container-3baos1 .horizontal-1ae9ci');
             panel.prepend(button);
 
             button.on('click', _ => {
                 if (!BdApi.getData('FakeDeafen', 'enabled')) {
                     this.replaceWS();
-                    button.css('color', 'var(--status-positive-background)'); //--status-danger-background
+                    button.style.color = 'var(--status-positive-background)' //--status-danger-background
                 }
                 else {
                     this.restoreWS();
-                    button.removeAttr('style');
+                    button.style.color = ''
                 }
             })
-        };
 
-
-        onStart() {
             Logger.log("Started");
             Patcher.before(Logger, "log", (t, a) => {
                 a[0] = "Patched Message: " + a[0];
             });
-            if (typeof jQuery == 'undefined') {
-                if (!document.getElementById('jquery')) {
-                    BdApi.linkJS('jquery', 'https://code.jquery.com/jquery-3.5.1.min.js');
-                }
-                let jquery_id = document.querySelector('#jquery');
-                jquery_id.addEventListener('load', _ => this.__main__());
-            } else this.__main__();
         }
 
         onStop() {
-            Logger.log("Stopped");
-            Patcher.unpatchAll();
-
             if (BdApi.getData('FakeDeafen', 'enabled')) {
                 this.restoreWS();
             }
     
-            let button = $('#fdButton');
+            let button = document.getElementById('fdButton');
             button.remove();
+
+            Logger.log("Stopped");
+            Patcher.unpatchAll();
         };
 
         getSettingsPanel() {
