@@ -45,26 +45,12 @@ module.exports = (() => {
         },
         "changelog":[
             {
-                "title":"New",
-                "items":[
-                    "Fully rewrited Plugin",
-                    "Added changelog"
-                ]
-            },
-            {
                 "title":"Fixed",
                 "type":"fixed",
                 "items":[
-                    "jQuery error with multiple jQuery plugins"
+                    "Fixed double-click installation."
                 ]
             },
-            /*{
-                "title":"Improvements",
-                "type":"improved",
-                "items":[
-                    "Fully rewrited plugin!"
-                ]
-            },*/
             {
                 "title":"On-going",
                 "type":"progress",
