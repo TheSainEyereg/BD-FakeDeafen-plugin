@@ -38,17 +38,17 @@ module.exports = (() => {
                     "twitter_username":"olejka_top4ik"
                 }
             ],
-            "version":"2.1.1",
+            "version":"2.2.1",
             "description":"Plugin that allows you to fake your mute and deafen.",
             "github":"https://github.com/TheSainEyereg/BD-FakeDeafen-plugin",
             "github_raw":"https://raw.githubusercontent.com/TheSainEyereg/BD-FakeDeafen-plugin/master/FakeDeafen.plugin.js"
         },
-        "changelog":[ //Fixes:"fixed", Improvements:"improved", Improvements:"type"
+        "changelog":[ ///Fixes:"fixed", Improvements:"improved", Added:"new", On-going:"progress"
             {
-                "title":"Fixes",
-                "type":"fixed",
+                "title":"Improvements",
+                "type":"improved",
                 "items":[
-                    "Fixed click event."
+                    "Moved \"FD\" button to topbar"
                 ]
             },
             {
@@ -149,19 +149,17 @@ module.exports = (() => {
             if (BdApi.getData('FakeDeafen', 'enabled')) {
                 this.restoreWS();
             }
+            
+            const title = document.getElementsByClassName('titleBar-AC4pGV')[0];
             const button = new DOMParser().parseFromString(`
-                <button 
-                    aria-label="FakeDeafen"
-                    role="switch" 
-                    type="button" 
-                    class="button-14-BFJ enabled-2cQ-u7 button-38aScr"
-                    id="fdButton"
-                >
-                    <div class="contents-18-Yxp">FD</div>
-                </button>
+            <div 
+                class="winButtonMinMax-PBQ2gm winButton-iRh8-Z flexCenter-3_1bcw flex-1O1GKY justifyCenter-3D2jYp alignCenter-1dQNNs"
+                tabindex="-1" 
+                role="button"
+                id="fdButton"
+            >FD</div>
             `, 'text/html').body.childNodes[0];
-            const panel = document.querySelector('.container-3baos1 .horizontal-1ae9ci');
-            panel.prepend(button);
+            title.append(button);
 
             button.onclick = _ => {
                 if (!BdApi.getData('FakeDeafen', 'enabled')) {
