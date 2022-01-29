@@ -12,192 +12,192 @@
 	var pathPlugins = shell.ExpandEnvironmentStrings("%APPDATA%/BetterDiscord/plugins");
 	var pathSelf = WScript.ScriptFullName;
 	// Put the user at ease by addressing them in the first person
-	shell.Popup("It looks like you've mistakenly tried to run me directly. \n(Don't do that!)", 0, "I'm a plugin for BetterDiscord", 0x30);
+	shell.Popup("It looks like you"ve mistakenly tried to run me directly. \n(Don"t do that!)", 0, "I"m a plugin for BetterDiscord", 0x30);
 	if (fs.GetParentFolderName(pathSelf) === fs.GetAbsolutePathName(pathPlugins)) {
-		shell.Popup("I'm in the correct folder already.", 0, "I'm already installed", 0x40);
+		shell.Popup("I"m in the correct folder already.", 0, "I"m already installed", 0x40);
 	} else if (!fs.FolderExists(pathPlugins)) {
-		shell.Popup("I can't find the BetterDiscord plugins folder.\nAre you sure it's even installed?", 0, "Can't install myself", 0x10);
-	} else if (shell.Popup("Should I copy myself to BetterDiscord's plugins folder for you?", 0, "Do you need some help?", 0x34) === 6) {
+		shell.Popup("I can"t find the BetterDiscord plugins folder.\nAre you sure it"s even installed?", 0, "Can"t install myself", 0x10);
+	} else if (shell.Popup("Should I copy myself to BetterDiscord"s plugins folder for you?", 0, "Do you need some help?", 0x34) === 6) {
 		fs.CopyFile(pathSelf, fs.BuildPath(pathPlugins, fs.GetFileName(pathSelf)), true);
 		// Show the user where to put plugins in the future
 		shell.Exec("explorer " + pathPlugins);
-		shell.Popup("I'm installed!", 0, "Successfully installed", 0x40);
+		shell.Popup("I"m installed!", 0, "Successfully installed", 0x40);
 	}
 	WScript.Quit();
 @else@*/
 
 module.exports = (() => {
-    const config = {
-        "info":{
-            "name":"Fake Deafen",
-            "authors":[
-                {
-                    "name":"Olejka",
-                    "discord_id":"388353045500657674",
-                    "github_username":"TheSainEyereg",
-                    "twitter_username":"olejka_top4ik"
-                }
-            ],
-            "version":"2.2.1",
-            "description":"Plugin that allows you to fake your mute and deafen.",
-            "github":"https://github.com/TheSainEyereg/BD-FakeDeafen-plugin",
-            "github_raw":"https://raw.githubusercontent.com/TheSainEyereg/BD-FakeDeafen-plugin/master/FakeDeafen.plugin.js"
-        },
-        "changelog":[ ///Fixes:"fixed", Improvements:"improved", Added:"new", On-going:"progress"
-            {
-                "title":"Improvements",
-                "type":"improved",
-                "items":[
-                    "Moved \"FD\" button to topbar"
-                ]
-            },
-            {
-                "title":"On-going",
-                "type":"progress",
-                "items":[
-                    "Use React component to mute/unmute user."
-                ]
-            }
-        ],
-        "main":"index.js"
-    };
+	const config = {
+		"info":{
+			"name":"Fake Deafen",
+			"authors":[
+				{
+					"name":"Olejka",
+					"discord_id":"388353045500657674",
+					"github_username":"TheSainEyereg",
+					"twitter_username":"olejka_top4ik"
+				}
+			],
+			"version":"2.3.0",
+			"description":"Plugin that allows you to fake your mute and deafen.",
+			"github":"https://github.com/TheSainEyereg/BD-FakeDeafen-plugin",
+			"github_raw":"https://raw.githubusercontent.com/TheSainEyereg/BD-FakeDeafen-plugin/master/FakeDeafen.plugin.js"
+		},
+		"changelog":[ ///Fixes:"fixed", Improvements:"improved", Added:"new", On-going:"progress"
+			{
+				"title":"Fixes",
+				"type":"fixed",
+				"items":[
+					"Plugin now working after Discord update.",
+				]
+			},
+			{
+				"title":"On-going",
+				"type":"progress",
+				"items":[
+					"Use React component to mute/unmute user."
+				]
+			}
+		],
+		"main":"index.js"
+	};
 
-    return !global.ZeresPluginLibrary ? class {
-        constructor() {this._config = config;}
-        getName() {return config.info.name;}
-        getAuthor() {return config.info.authors.map(a => a.name).join(", ");}
-        getDescription() {return config.info.description;}
-        getVersion() {return config.info.version;}
-        load() {
-            BdApi.showConfirmationModal("Library Missing", `The library plugin needed for ${config.info.name} is missing. Please click Download Now to install it.`, {
-                confirmText: "Download Now",
-                cancelText: "Cancel",
-                onConfirm: () => {
-                    require("request").get("https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js", async (error, response, body) => {
-                        if (error) return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js");
-                        await new Promise(r => require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "0PluginLibrary.plugin.js"), body, r));
-                    });
-                }
-            });
-        }
-        start() {}
-        stop() {}
-    } : (([Plugin, Api]) => {
-        const plugin = (Plugin, Library) => {
+	return !global.ZeresPluginLibrary ? class {
+		constructor() {this._config = config;}
+		getName() {return config.info.name;}
+		getAuthor() {return config.info.authors.map(a => a.name).join(", ");}
+		getDescription() {return config.info.description;}
+		getVersion() {return config.info.version;}
+		load() {
+			BdApi.showConfirmationModal("Library Missing", `The library plugin needed for ${config.info.name} is missing. Please click Download Now to install it.`, {
+				confirmText: "Download Now",
+				cancelText: "Cancel",
+				onConfirm: () => {
+					require("request").get("https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js", async (error, response, body) => {
+						if (error) return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js");
+						await new Promise(r => require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "0PluginLibrary.plugin.js"), body, r));
+					});
+				}
+			});
+		}
+		start() {}
+		stop() {}
+	} : (([Plugin, Api]) => {
+		const plugin = (Plugin, Library) => {
 
-    const {Logger, Patcher, Settings} = Library;
+	const {Logger, Patcher, Settings} = Library;
 
-    return class FakeDeafen extends Plugin {
-        constructor() {
-            super();
-            this.defaultSettings = {};
-            this.defaultSettings.action = "mute"; // "mute" or "deafen"
-        }
-
-
-        aria_check(arg, callback) {
-            const buttons = document.querySelectorAll('.container-3baos1 .horizontal-1ae9ci button');
-            const button = buttons[this.settings.action == "mute"?buttons.length-3:buttons.length-2]; //some plugins adding another buttons
-            if (button.getAttribute('aria-checked') == arg) {
-                if (callback) setTimeout(callback, 100);
-            } else {
-                button.click();
-                function check() {
-                    if(button.getAttribute('aria-checked')==arg) {
-                        if (callback) setTimeout(callback, 100);
-                        return
-                    } else {
-                        setTimeout(check, 100);
-                        return
-                    }
-                }
-                check();
-            }
-        };
-
-        replaceWS() {
-            this.aria_check('true', _ => {
-                const Decoder = new TextDecoder("utf-8");
-                WebSocket.prototype.original = WebSocket.prototype.send;
-                WebSocket.prototype.send = function(data) {
-                    if (Object.prototype.toString.call(data) === "[object ArrayBuffer]") {
-                        if (Decoder.decode(data).includes("self_deaf")) {
-                            data = data.replace('"self_mute":false', 'NiceOneDiscord');
-                        }
-                    }
-                    WebSocket.prototype.original.apply(this, [data]);
-                }
-                BdApi.setData('FakeDeafen', 'enabled', true);
-                this.aria_check('false');
-            })
-        };
-        restoreWS() {
-            this.aria_check('true', _ => {
-                //console.log('Enabled mute!');
-                WebSocket.prototype.send = WebSocket.prototype.original;
-                BdApi.setData('FakeDeafen', 'enabled', false);
-                this.aria_check('false')
-            })
-        };
+	return class FakeDeafen extends Plugin {
+		constructor() {
+			super();
+			this.defaultSettings = {};
+			this.defaultSettings.action = "mute"; // "mute" or "deafen"
+		}
 
 
-        onStart() {
-            Patcher.before(Logger, "log", (t, a) => {
-                a[0] = "Patched Message: " + a[0];
-            });
-            
-            if (BdApi.getData('FakeDeafen', 'enabled')) {
-                this.restoreWS();
-            }
-            
-            const title = document.getElementsByClassName('titleBar-AC4pGV')[0];
-            const button = new DOMParser().parseFromString(`
-            <div 
-                class="winButtonMinMax-PBQ2gm winButton-iRh8-Z flexCenter-3_1bcw flex-1O1GKY justifyCenter-3D2jYp alignCenter-1dQNNs"
-                tabindex="-1" 
-                role="button"
-                id="fdButton"
-            >FD</div>
-            `, 'text/html').body.childNodes[0];
-            title.append(button);
+		aria_check(arg, callback) {
+			const buttons = document.querySelectorAll(".container-YkUktl .horizontal-112GEH button");
+			const button = buttons[this.settings.action == "mute"?buttons.length-3:buttons.length-2]; //some plugins adding another buttons
+			if (button.getAttribute("aria-checked") == arg) {
+				if (callback) setTimeout(callback, 100);
+			} else {
+				button.click();
+				function check() {
+					if(button.getAttribute("aria-checked")==arg) {
+						if (callback) setTimeout(callback, 100);
+						return
+					} else {
+						setTimeout(check, 100);
+						return
+					}
+				}
+				check();
+			}
+		};
 
-            button.onclick = _ => {
-                if (!BdApi.getData('FakeDeafen', 'enabled')) {
-                    this.replaceWS();
-                    button.style.color = 'var(--status-positive-background)' //--status-danger-background
-                }
-                else {
-                    this.restoreWS();
-                    button.style.color = ''
-                }
-            }
+		replaceWS() {
+			this.aria_check("true", _ => {
+				const Decoder = new TextDecoder("utf-8");
+				WebSocket.prototype.original = WebSocket.prototype.send;
+				WebSocket.prototype.send = function(data) {
+					if (Object.prototype.toString.call(data) === "[object ArrayBuffer]") {
+						if (Decoder.decode(data).includes("self_deaf")) {
+							data = data.replace("\"self_mute\":false", "NiceOneDiscord");
+						}
+					}
+					WebSocket.prototype.original.apply(this, [data]);
+				}
+				BdApi.setData("FakeDeafen", "enabled", true);
+				this.aria_check("false");
+			})
+		};
+		restoreWS() {
+			this.aria_check("true", _ => {
+				//console.log("Enabled mute!");
+				WebSocket.prototype.send = WebSocket.prototype.original;
+				BdApi.setData("FakeDeafen", "enabled", false);
+				this.aria_check("false")
+			})
+		};
 
-            Logger.log("Started");
-        }
 
-        onStop() {
-            if (BdApi.getData('FakeDeafen', 'enabled')) {
-                this.restoreWS();
-            }
-    
-            let button = document.getElementById('fdButton');
-            button.remove();
+		onStart() {
+			Patcher.before(Logger, "log", (t, a) => {
+				a[0] = "Patched Message: " + a[0];
+			});
+			
+			if (BdApi.getData("FakeDeafen", "enabled")) {
+				this.restoreWS();
+			}
+			
+			const title = document.getElementsByClassName("titleBar-1it3bQ")[0];
+			const button = new DOMParser().parseFromString(`
+			<div 
+				class="winButtonMinMax-3RsPUg winButton-3UMjdg flexCenter-1Mwsxg flex-3BkGQD justifyCenter-rrurWZ alignCenter-14kD11"
+				tabindex="-1" 
+				role="button"
+				id="fdButton"
+			>FD</div>
+			`, "text/html").body.childNodes[0];
+			title.append(button);
 
-            Logger.log("Stopped");
-            Patcher.unpatchAll();
-        };
+			button.onclick = _ => {
+				if (!BdApi.getData("FakeDeafen", "enabled")) {
+					this.replaceWS();
+					button.style.color = "var(--status-positive-background)" //--status-danger-background
+				}
+				else {
+					this.restoreWS();
+					button.style.color = ""
+				}
+			}
 
-        getSettingsPanel() {
-            return Settings.SettingPanel.build(this.saveSettings.bind(this), 
-                new Settings.RadioGroup("Select a button action", "What should be done when \"FD\" button is pressed", this.settings.action, [
-                    {name: "Fake mute", value: "mute"},
-                    {name: "Fake deafen", value: "deafen"},
-                ], (e) => {this.settings.action = e;}),
-            );
-        }
-    };
+			Logger.log("Started");
+		}
+
+		onStop() {
+			if (BdApi.getData("FakeDeafen", "enabled")) {
+				this.restoreWS();
+			}
+	
+			const button = document.getElementById("fdButton");
+			if (button) button.remove();
+
+			Logger.log("Stopped");
+			Patcher.unpatchAll();
+		};
+
+		getSettingsPanel() {
+			return Settings.SettingPanel.build(this.saveSettings.bind(this), 
+				new Settings.RadioGroup("Select a button action", "What should be done when \"FD\" button is pressed", this.settings.action, [
+					{name: "Fake mute", value: "mute"},
+					{name: "Fake deafen", value: "deafen"},
+				], (e) => {this.settings.action = e;}),
+			);
+		}
+	};
 };
-        return plugin(Plugin, Api);
-    })(global.ZeresPluginLibrary.buildPlugin(config));
+		return plugin(Plugin, Api);
+	})(global.ZeresPluginLibrary.buildPlugin(config));
 })();
 /*@end@*/
